@@ -1,5 +1,7 @@
 package ImageDemo;
 
+import com.twelvemonkeys.imageio.plugins.tiff.TIFFImageWriteParam;
+
 import javax.imageio.*;
 import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.stream.FileImageOutputStream;
@@ -34,14 +36,20 @@ public class ImageTest03_1 {
 
         //BufferedImage bufferedImage = ImageIO.read(new File(filepath));
 
+
         Iterator<ImageWriter> iter = ImageIO.getImageWritersByFormatName("tif");
         ImageWriter writer = iter.next();
 
-        String dest = Paths.get(path, "gmarbles-12-1-monkey.tif").toString();
+        String dest = Paths.get(path, "gmarbles-12-2-monkey.tif").toString();
         ImageOutputStream stream = new FileImageOutputStream(new File(dest));
 
+        ImageWriteParam param = writer.getDefaultWriteParam();
+        param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+        param.setCompressionType("LZW");
+        param.setCompressionQuality(0.5f);
+
         writer.setOutput(stream);
-        writer.write(streamMetadata, new IIOImage(bufferedImage, null, imageMetadata), null);
+        writer.write(streamMetadata, new IIOImage(bufferedImage, null, imageMetadata), param);
         stream.flush();
         stream.close();
         writer.dispose();
@@ -54,4 +62,6 @@ public class ImageTest03_1 {
         System.out.println(path.toString());
         return path.toString();
     }
+
+
 }
