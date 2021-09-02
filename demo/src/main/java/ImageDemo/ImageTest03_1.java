@@ -36,6 +36,7 @@ public class ImageTest03_1 {
 
         //BufferedImage bufferedImage = ImageIO.read(new File(filepath));
 
+
         Iterator<ImageWriter> iter = ImageIO.getImageWritersByFormatName("tif");
         ImageWriter writer = iter.next();
 
@@ -44,7 +45,6 @@ public class ImageTest03_1 {
 
         String dest = Paths.get(path, "gmarbles-12-" + types[7] + "-0.5f-monkey.tif").toString();
         ImageOutputStream stream = new FileImageOutputStream(new File(dest));
-
 
         ImageWriteParam param = writer.getDefaultWriteParam();
         param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
@@ -65,4 +65,6 @@ public class ImageTest03_1 {
         System.out.println(path.toString());
         return path.toString();
     }
+
+
 }
